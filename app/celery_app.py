@@ -1,0 +1,10 @@
+from zsl.interface.importer import initialize_web_application
+initialize_web_application()
+
+from zsl.application.service_application import service_application
+
+from zsl.interface.celery.worker import CeleryTaskQueueOutsideWorkerModule, CeleryTaskQueueWorkerBase
+
+service_application.add_injector_module(CeleryTaskQueueOutsideWorkerModule)
+
+app = service_application.get_injector().get(CeleryTaskQueueWorkerBase).celery_app
